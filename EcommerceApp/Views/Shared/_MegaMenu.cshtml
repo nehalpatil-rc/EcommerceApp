@@ -1,0 +1,27 @@
+﻿@{
+    var categories = new List<string>
+    {
+        "Category 1",
+        "Category 2",
+        "Category 3"
+    };
+}
+
+<li class="nav-item dropdown mega-dropdown">
+    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Categories
+    </a>
+    <div class="dropdown-menu mega-menu" aria-labelledby="navbarDropdown">
+        <div class="row">
+            @foreach (var category in categories)
+            {
+                <div class="col-md-4">
+                    <h6 class="dropdown-header">@category</h6>
+                    <a class="dropdown-item" href="#">Subcategory @category 1.1</a>
+                    <a class="dropdown-item" href="#">Subcategory @category 1.2</a>
+                    <a class="dropdown-item" href="#">Subcategory @category 1.3</a>
+                </div>
+            }
+        </div>
+    </div>
+</li>

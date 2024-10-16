@@ -1,0 +1,78 @@
+﻿@using commercetools.Sdk.Api.Models.Categories
+@model IList<ICategory>
+>
+
+@* @{
+    ViewData["Title"] = "Category List";
+} *@
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+
+<style>
+    body {
+        background-color: #f4f7fa; /* Light background */
+        font-family: 'Arial', sans-serif; /* Modern font */
+    }
+
+    h2 {
+        font-size: 2rem; /* Larger heading */
+        font-weight: bold; /* Bold heading */
+        color: #333; /* Dark color for text */
+        text-align: center; /* Center align heading */
+        margin-bottom: 40px; /* Spacing below heading */
+    }
+
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth scale and shadow transition */
+        border-radius: 10px; /* Rounded corners */
+    }
+
+    .card:hover {
+        transform: translateY(-5px); /* Slight lift effect */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+    }
+
+    .card-title {
+        font-size: 1.5rem; /* Increase title size */
+        font-weight: bold; /* Bold title */
+        /* Blue color for title */
+    }
+
+    .btn-primary {
+        background-color: #28a745; /* Green color for buttons */
+        border: none; /* Remove border */
+        border-radius: 5px; /* Rounded buttons */
+        transition: background-color 0.3s ease; /* Transition for hover effect */
+    }
+
+    .btn-primary:hover {
+        background-color: #218838; /* Darker green on hover */
+    }
+
+    /* Responsive adjustments */
+   
+</style>
+
+
+
+<div class="container mt-5">
+    <div class="row">
+        @foreach (var category in Model)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@category.Name.FirstOrDefault().Value</h5>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="ChildCategoryList/?CategoryId=@category.Id" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

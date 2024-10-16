@@ -1,0 +1,95 @@
+﻿@using commercetools.Sdk.Api.Models.Products
+@model IList<IProductProjection>
+
+<style>
+    .card {
+        border-radius: 15px; /* Rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        transition: transform 0.3s, box-shadow 0.3s; /* Smooth transitions for hover effects */
+    }
+
+        .card:hover {
+            transform: scale(1.05); /* Zoom effect on hover */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        }
+
+    .card-img {
+        width: 100%;
+        height: 200px;
+        object-fit: contain; /* Ensure images are not cut off */
+        border-radius: 15px 15px 0 0; /* Round top corners */
+    }
+
+    
+
+    .container {
+        max-width: 1200px; /* Maximum width for larger screens */
+        margin: auto; /* Center the container */
+    }
+
+    .card-body {
+        padding: 20px; /* Consistent padding */
+    }
+
+    .btn-primary {
+        background-color: #28a745; /* Green color for buttons */
+        border: none;
+        transition: background-color 0.3s ease;
+        width: 100%;
+    }
+
+        .btn-primary:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+</style>
+
+<div class="container mt-5">
+    <div class="row d-flex flex-wrap justify-content-center">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="@(product.MasterVariant?.Images?.FirstOrDefault()?.Url ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWz9tftw9qculFH1gxieWkxL6rbRk_hrXTSg&s")"
+                         class="card-img img-fluid"
+                         alt="@product.Name"
+                         onload="onImageLoad($(this));"
+                         onerror="onImageError($(this));" />
+                
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name?.FirstOrDefault().Value</h5>
+                        <p class="card-text text-muted">Price: $@(product.MasterVariant?.Prices?.FirstOrDefault()?.Value?.CentAmount / 100.0 ?? 0.00)</p>
+                        <button class="btn btn-primary add-to-cart" data-product-id="@product.Id">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function onImageLoad(img) {
+        img.siblings('.loading').hide(); // Hide loading text when the image loads
+    }
+
+    function onImageError(img) {
+        img.siblings('.loading').text('Image not available').show(); // Show error message if image fails to load
+    }
+
+    $(document).ready(function () {
+        $('.add-to-cart').click(function () {
+            var productId = $(this).data('product-id');
+            $.ajax({
+                url: '@Url.Action("AddToCart", "Cart")', // Adjust controller name as needed
+                type: 'POST',
+                data: { productId: productId },
+                success: function (response) {
+                    alert('Product added to cart successfully!');
+                },
+                error: function (xhr, status, error) {
+                    alert('Error adding product to cart: ' + error);
+                }
+            });
+        });
+    });
+</script>

@@ -1,0 +1,69 @@
+﻿@model List<commercetools.Sdk.Api.Models.Carts.ILineItem>
+
+    <style>
+
+    .btn-primary {
+        background-color: #28a745; /* Green color for buttons */
+        border: none;
+        transition: background-color 0.3s ease;
+     
+    }
+
+        .btn-primary:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+    </style>
+<div class="container mt-5">
+    <h2 class="mb-4">Your Shopping Cart</h2>
+
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <img src="@item.Variant.Images?.FirstOrDefault()?.Url" alt="@item.Name.FirstOrDefault().Value" class="img-fluid" style="width: 100px;" />
+                        </td>
+                        <td>@item.Name.FirstOrDefault().Value</td>
+                        <td>$@item.Price.Value.CentAmount</td>
+                        <td>
+                            <input type="number" class="form-control" value="@item.Quantity" min="1" />
+                        </td>
+                        <td>$@(item.Price.Value.CentAmount * item.Quantity)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-end">
+            <h5>
+                Total:
+                <strong>
+                    $@(Model.Sum(i => i.Price.Value.CentAmount * i.Quantity))
+                </strong>
+            </h5>
+        </div>
+
+        <div class="d-flex justify-content-end mt-3">
+            <button class="btn btn-secondary me-2">Update Cart</button>
+            <a href="/checkout" class="btn btn-primary add-to-cart">Proceed to Checkout</a>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            Your cart is empty!
+        </div>
+    }
+</div>

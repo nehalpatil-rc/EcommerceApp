@@ -1,0 +1,83 @@
+﻿@using commercetools.Sdk.Api.Models.Customers
+@model CustomerSignin
+@{
+    ViewData["Title"] = "Login";
+}
+
+<style>
+    .card {
+        border-radius: 15px;
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #2d2d2d; /* Match navbar and footer */
+        color: white;
+        font-size: 1.25rem;
+        font-weight: bold;
+        border-radius: 15px 15px 0 0;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .btn-primary {
+        background-color: #28a745; /* Green color for buttons */
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+    .form-label {
+        font-weight: 600;
+    }
+
+    .link-secondary {
+        color: #2d2d2d; /* Match navbar and footer */
+        text-decoration: none;
+    }
+
+        .link-secondary:hover {
+            text-decoration: underline;
+        }
+
+    /* Centering the container */
+    .containerb {
+        max-width: 400px; /* Limit max width for better appearance */
+        margin: 5% auto; /* Center the container */
+        width: 100%;
+    }
+</style>
+
+<div class="containerb">
+    <div class="card">
+        <div class="card-header">
+            Login to Your Account
+        </div>
+        <div class="card-body p-4">
+            <form asp-action="Login" method="post">
+                <div class="mb-3">
+                    <label for="Email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="Email" name="Email" asp-for="Email" placeholder="Enter your email" required />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="Password" asp-for="Password" placeholder="Enter your password" required />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
+            <hr class="my-4">
+            <div class="text-center">
+                <a href="@Url.Action("Register", "Account")" class="link-secondary">Don't have an account? Register here</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

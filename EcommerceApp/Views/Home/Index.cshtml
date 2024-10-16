@@ -1,0 +1,171 @@
+﻿@using commercetools.Sdk.Api.Models.Products
+@model IList<IProductProjection>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+
+<style>
+    /* Carousel Styles */
+    .carousel-item {
+        height: 600px; /* Fixed height for the slider */
+        position: relative;
+        overflow: hidden; /* Prevent overflow */
+    }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Maintain aspect ratio */
+            filter: brightness(70%); /* Darken the image */
+        }
+
+    .carousel-caption {
+        position: absolute;
+        bottom: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .btn-primary {
+        background-color: #28a745; /* Green color for buttons */
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background for controls */
+        border-radius: 50%; /* Round controls */
+    }
+
+    /* Content Section Styles */
+    .content-section {
+        background-color: #f8f9fa; /* Light background for content section */
+    }
+
+    .Categories {
+        padding-top: 60px; /* Padding for categories */
+    }
+
+    .content-section h2 {
+        text-align: center;
+        margin-bottom: 40px;
+        font-weight: bold;
+    }
+
+    .card {
+        margin: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth scaling and shadow */
+        border-radius: 10px; /* Rounded corners */
+    }
+
+        .card:hover {
+            transform: translateY(-5px); /* Slight lift effect */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+        }
+
+    .card-img-top {
+        border-top-left-radius: 10px; /* Rounded corners for image */
+        border-top-right-radius: 10px;
+    }
+
+    .card-title {
+        font-size: 1.25rem; /* Increase title size */
+        font-weight: bold; /* Bold title */
+    }
+
+    .card-text {
+        font-size: 0.9rem; /* Adjust font size */
+    }
+</style>
+
+<div class="content-section">
+    <div class="container-fluid p-0">
+        <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+            <div class="carousel-inner">
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    var product = Model[i];
+                    var imageUrl = product.MasterVariant?.Images?.FirstOrDefault()?.Url;
+
+                    if (imageUrl != null)
+                    {
+                        <div class="carousel-item @(i == 0 ? "active" : "")">
+                            <img src="@imageUrl" alt="@product.Name" class="d-block w-100" style="height: 100%; object-fit: cover;" /> 
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>@product.Name?.FirstOrDefault().Value</h5>
+                                <p>Price: $@(product.MasterVariant?.Prices?.FirstOrDefault()?.Value?.CentAmount / 100.0 ?? 0)</p>
+                                <a href="@Url.Action("ProductDetail", "Product", new { id = product.Id })" class="btn btn-primary">Shop Now</a>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+            <!-- Indicators -->
+            <div class="carousel-indicators">
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")" aria-current="@(i == 0 ? "true" : "false")" aria-label="Slide @(i + 1)"></button>
+                }
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#featuredCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#featuredCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="container Categories">
+        <h2>Shop Our Categories</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Category 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Category 1</h5>
+                        <p class="card-text">Explore a wide range of products in Category 1.</p>
+                        <a href="#" class="btn btn-primary">View Products</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Category 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Category 2</h5>
+                        <p class="card-text">Discover unique items in Category 2.</p>
+                        <a href="#" class="btn btn-primary">View Products</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Category 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Category 3</h5>
+                        <p class="card-text">Find the best deals in Category 3.</p>
+                        <a href="#" class="btn btn-primary">View Products</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

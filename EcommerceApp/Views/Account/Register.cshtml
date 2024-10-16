@@ -1,0 +1,106 @@
+﻿@using commercetools.Sdk.Api.Models.Customers
+@model CustomerDraft
+
+@{
+    ViewData["Title"] = "Create Customer Account";
+}
+
+<!-- Add custom styles -->
+<style>
+    .card {
+        border-radius: 15px;
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #2d2d2d; /* Match navbar and footer */
+        color: white;
+        font-size: 1.25rem;
+        font-weight: bold;
+        border-radius: 15px 15px 0 0;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .btn-primary {
+        background-color: #28a745; /* Green color for buttons */
+        border: none;
+        transition: background-color 0.3s ease;
+        width: 100%; /* Full-width button */
+    }
+
+        .btn-primary:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+    .form-label {
+        font-weight: 600;
+    }
+
+    .link-secondary {
+        color: #2d2d2d; /* Match navbar and footer */
+        text-decoration: none;
+    }
+
+        .link-secondary:hover {
+            text-decoration: underline;
+        }
+
+    /* Ensure the container takes up the full height */
+    .containerb {
+        max-width: 400px; /* Limit max width for better appearance */
+        margin: auto; /* Center container */
+        padding-top: 5%; /* Add top padding for spacing */
+    }
+</style>
+
+<!-- Main Container -->
+<div class="containerb mt-5">
+    <div class="card">
+        <div class="card-header">
+            @ViewData["Title"]
+        </div>
+        <div class="card-body p-4">
+            <!-- Start Form -->
+            <form method="post" action="@Url.Action("Register", "Account")">
+                <!-- Email Input -->
+                <div class="mb-3">
+                    <label for="Email" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="Email" name="Email" required asp-for="Email" placeholder="Enter your email address" />
+                </div>
+
+                <!-- Password Input -->
+                <div class="mb-3">
+                    <label for="Password" class="form-label">Password:</label>
+                    <input type="password" class="form-control" id="Password" name="Password" required asp-for="Password" placeholder="Choose a password" />
+                </div>
+
+                <!-- Key Input -->
+                <div class="mb-3">
+                    <label for="Key" class="form-label">Key:</label>
+                    <input type="text" class="form-control" id="Key" name="Key" required asp-for="Key" placeholder="Enter a key" />
+                </div>
+
+                <!-- First Name Input -->
+                <div class="mb-3">
+                    <label for="FirstName" class="form-label">First Name:</label>
+                    <input type="text" class="form-control" id="FirstName" name="FirstName" asp-for="FirstName" placeholder="Enter your first name" />
+                </div>
+
+                <!-- Last Name Input -->
+                <div class="mb-3">
+                    <label for="LastName" class="form-label">Last Name:</label>
+                    <input type="text" class="form-control" id="LastName" name="LastName" asp-for="LastName" placeholder="Enter your last name" />
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                </div>
+                <div class="mt-3 text-center">
+                    <a href="@Url.Action("Login", "Account")" class="link-secondary">Already have an account? Login here</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
